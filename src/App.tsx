@@ -25,6 +25,9 @@ export const App: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const noUsersPosts =
+    !userPosts.length && selectedUser && !isLoading && !isError;
+
   useEffect(() => {
     setIsLoading(true);
     setIsError(false);
@@ -81,17 +84,11 @@ export const App: FC = () => {
                   </div>
                 )}
 
-                {!userPosts.length &&
-                  selectedUser &&
-                  !isLoading &&
-                  !isError && (
-                    <div
-                      className="notification is-warning"
-                      data-cy="NoPostsYet"
-                    >
-                      No posts yet
-                    </div>
-                  )}
+                {noUsersPosts && (
+                  <div className="notification is-warning" data-cy="NoPostsYet">
+                    No posts yet
+                  </div>
+                )}
 
                 {!!userPosts.length && selectedUser && (
                   <PostsList
